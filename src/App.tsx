@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Github, Wand } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
@@ -6,8 +7,15 @@ import { Label } from "./components/ui/label";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "./components/ui/select";
 import { Slider } from "./components/ui/slider";
 import { VideoInputForm } from "./components/video-input-form";
+import { PromptSelect } from "./components/prompt-select";
 
 export function App() {
+  const [temperature, setTemperature] = useState(0.5)
+  const [videoId, setVideoId] = useState<string | null>(null)
+
+  function handlePromptSelected(template: string) {
+
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -41,22 +49,14 @@ export function App() {
           <span className="text-sm text-muted-foreground">Lembre-se: você pode utilizar a variável <code className="text-violet-400">{'{transcription}'}</code> no seu prompt para adicionar o conteúdo da transcrição do vídeo selecionado.</span>
         </div>
         <aside className="w-80 space-y-6">
-          <VideoInputForm />
+          <VideoInputForm onVideoUploaded={setVideoId} />
 
           <Separator className="mx-2 h-0.5 bg-zinc-800" />
 
           <form className="space-y-4">
             <div className="space-y-2">
               <Label>Prompt</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um prompt..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="videoTitle">Título de Vídeo</SelectItem>
-                  <SelectItem value="videoDescription">Descrição de Vídeo</SelectItem>
-                </SelectContent>
-              </Select>
+              <PromptSelect onPromptSelected={handlePromptSelected} />
             </div>
 
             <div className="space-y-2">
@@ -80,7 +80,8 @@ export function App() {
                 min={0}
                 max={1}
                 step={0.1}
-
+                value={[temperature]}
+                onValueChange={value => setTemperature(value[0])}
               />
               <span
                 className="block text-xs text-muted-foreground italic"
