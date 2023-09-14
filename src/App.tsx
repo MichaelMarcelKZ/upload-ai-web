@@ -14,6 +14,10 @@ export function App() {
   const [temperature, setTemperature] = useState(0.5)
   const [videoId, setVideoId] = useState<string | null>(null)
 
+  function handleGithubPage() {
+    window.open('https://github.com/kzs3c', '_blank');
+  }
+
   const {
     input,
     setInput,
@@ -41,7 +45,7 @@ export function App() {
 
           <Separator orientation="vertical" className="h-6 w-0.5 bg-muted-foreground" />
 
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleGithubPage}>
             <Github className="w-4 h-4 mr-2" />
             Github
           </Button>
