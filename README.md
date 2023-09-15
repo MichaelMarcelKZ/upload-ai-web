@@ -42,7 +42,7 @@ O projeto foi construído usando as seguintes tecnologias e pacotes:
 <!-- GETTING STARTED -->
 ## Como usar
 
-upload.ai é uma aplicação web que permite você fazer o upload de um vídeo para que o ChatGPT gere textos com base na transcrição do vídeo em texto, que é feita através da Whisper AI, e então gerar os textos com base no prompt informado na primeira caixa de texto usando o ChatGPT.
+upload.ai é uma aplicação web que permite você fazer o upload de um vídeo para que o ChatGPT gere textos com base na transcrição do vídeo em texto, que é feita através da Whisper AI, e então gerar os textos com base no prompt informado na primeira caixa de texto.
 
 Você também pode informar palavras-chave contidas no vídeo para facilitar o entendimento das palavras no processo de transcrição do vídeo.
 
