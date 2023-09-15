@@ -1,4 +1,4 @@
-<h1 align="center">upload.ai - Front-End</h1>>
+<h1 align="center">upload.ai - Front-End</h1>
 <p align="center">A simple application that retrieves audio from a video, transcribes this audio into text using Whisper AI, and generates textual content from this transcription using pre-designed and customizable prompts with OpenAI's ChatGPT.</p>
 <hr />
 <p align="center">
