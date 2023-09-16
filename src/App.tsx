@@ -9,6 +9,7 @@ import { Slider } from "./components/ui/slider";
 import { VideoInputForm } from "./components/video-input-form";
 import { PromptSelect } from "./components/prompt-select";
 import { useCompletion } from "ai/react";
+import { PromptCreate } from "./components/prompt-create";
 
 export function App() {
   const [temperature, setTemperature] = useState(0.5)
@@ -56,13 +57,13 @@ export function App() {
         <div className="flex flex-col flex-1 gap-4">
           <div className="grid grid-rows-2 gap-4 flex-1">
             <Textarea
-              className="resize-none p-5 leading-relaxed"
+              className="resize-none p-4 leading-relaxed"
               placeholder="Inclua o prompt para a IA..."
               value={input}
               onChange={handleInputChange}
             />
             <Textarea
-              className="resize-none p-5 leading-relaxed"
+              className="resize-none p-4 leading-relaxed"
               placeholder="Resultado gerado pela IA..."
               readOnly
               value={completion}
@@ -78,7 +79,10 @@ export function App() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label>Prompt</Label>
-              <PromptSelect onPromptSelected={setInput} />
+              <div className="flex gap-2">
+                <PromptSelect onPromptSelected={setInput} />
+                <PromptCreate />
+              </div>
             </div>
 
             <div className="space-y-2">
