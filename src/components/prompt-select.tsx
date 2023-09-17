@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { api } from "@/lib/axios";
+import { usePrompts } from "@/hooks/usePrompts";
 
-interface Prompt {
-    id: string
-    title: string
-    template: string
-}
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface PromptSelectProps {
     onPromptSelected: (template: string) => void
 }
 
 export function PromptSelect(props: PromptSelectProps) {
-    const [prompts, setPrompts] = useState<Prompt[] | null>(null);
-
-    useEffect(() => {
-        api.get('/prompts').then(response => {
-            setPrompts(response.data)
-        })
-    }, [])
+    const { prompts } = usePrompts();
 
     function handlePromptSelected(promptId: string) {
         const selectedPrompt = prompts?.find(prompt => prompt.id === promptId)
@@ -33,7 +21,7 @@ export function PromptSelect(props: PromptSelectProps) {
 
     return (
         <Select onValueChange={handlePromptSelected}>
-            <SelectTrigger>
+            <SelectTrigger key={prompts?.length}>
                 <SelectValue placeholder="Selecione um prompt..." />
             </SelectTrigger>
             <SelectContent>

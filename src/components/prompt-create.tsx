@@ -10,10 +10,14 @@ import { useState, useRef } from "react";
 
 import { api } from "@/lib/axios";
 
+import { usePrompts } from "@/hooks/usePrompts";
+
 export function PromptCreate() {
     const [open, setOpen] = useState(false)
     const promptTitleRef = useRef<HTMLInputElement>(null)
     const promptTextRef = useRef<HTMLTextAreaElement>(null)
+
+    const { prompts, setPrompts } = usePrompts();
 
     async function handleCreatePrompt() {
 
@@ -34,6 +38,7 @@ export function PromptCreate() {
             window.alert('O uso da varíavel {transcription} no prompt é obrigatório!')
             return
         }
+        console.log("prompts:", prompts);
 
         const apiResponse = await api.post('/prompts', {
             title,
@@ -51,9 +56,15 @@ export function PromptCreate() {
             return
         }
 
-        const { prompt: { id } } = apiResponse.data;
+        console.log("prompts:", prompts);
 
-        if (id) {
+        const { prompt } = apiResponse.data;
+
+        if (prompt.id) {
+            let newPrompts = prompts
+            newPrompts?.push(prompt)
+            setPrompts(newPrompts);
+
             window.alert('Prompt cadastrado!');
             setOpen(false);
             return
@@ -65,7 +76,7 @@ export function PromptCreate() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button size="icon" className="w-9 bg" ><PlusCircle size={20} /></Button>
+                <Button asChild size="icon" className="w-9 bg" ><PlusCircle className="px-1.5" /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[1000px] max-h-[800px]">
                 <DialogHeader>
