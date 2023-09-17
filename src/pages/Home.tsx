@@ -7,9 +7,9 @@ import { Label } from "../components/ui/label";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "../components/ui/select";
 import { Slider } from "../components/ui/slider";
 import { VideoInputForm } from "../components/video-input-form";
-import { PromptSelect } from "../components/prompt-select";
 import { useCompletion } from "ai/react";
 import { PromptCreate } from "../components/prompt-create";
+import { PromptCombobox } from "../components/prompt-combobox";
 
 export function Home() {
     const [temperature, setTemperature] = useState(0.5)
@@ -80,7 +80,7 @@ export function Home() {
                         <div className="space-y-2">
                             <Label>Prompt</Label>
                             <div className="flex gap-2">
-                                <PromptSelect onPromptSelected={setInput} />
+                                <PromptCombobox onPromptSelected={setInput} />
                                 <PromptCreate />
                             </div>
                         </div>
