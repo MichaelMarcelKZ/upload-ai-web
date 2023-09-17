@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { useToast } from "./ui/use-toast";
 
 import { useState, useRef } from "react";
 
@@ -19,26 +20,39 @@ export function PromptCreate() {
 
     const { prompts, setPrompts } = usePrompts();
 
+    const { toast } = useToast();
+
     async function handleCreatePrompt() {
 
         const template = promptTextRef.current?.value
         const title = promptTitleRef.current?.value
 
         if (!title || title.length < 5) {
-            window.alert('O título deve conter no mínimo 5 caractéres!') //Alterar para algum modal.
+            toast({
+                title: "Atenção!",
+                description: "O título deve conter no mínimo 5 caractéres!",
+                variant: "destructive"
+            })
             return
         }
 
         if (!template || template.length < 30) {
-            window.alert('O prompt deve conter no mínimo 30 caractéres')
+            toast({
+                title: "Atenção!",
+                description: "O prompt deve conter no mínimo 30 caractéres!",
+                variant: "destructive"
+            })
             return
         }
 
         if (!template.includes("{transcription}")) {
-            window.alert('O uso da varíavel {transcription} no prompt é obrigatório!')
+            toast({
+                title: "Atenção!",
+                description: "O uso da varíavel {transcription} no prompt é obrigatório!",
+                variant: "destructive"
+            })
             return
         }
-        console.log("prompts:", prompts);
 
         const apiResponse = await api.post('/prompts', {
             title,
@@ -46,17 +60,23 @@ export function PromptCreate() {
         }).catch((reason) => {
             const { error } = reason.response.data;
             if (error) {
-                window.alert(error)
+                toast({
+                    title: "Atenção!",
+                    description: error,
+                    variant: "destructive"
+                })
             } else {
-                window.alert('Erro inesperado!');
+                toast({
+                    title: "Atenção!",
+                    description: "Erro inesperado!",
+                    variant: "destructive"
+                })
             }
         });
 
         if (!apiResponse) {
             return
         }
-
-        console.log("prompts:", prompts);
 
         const { prompt } = apiResponse.data;
 
@@ -65,12 +85,20 @@ export function PromptCreate() {
             newPrompts?.push(prompt)
             setPrompts(newPrompts);
 
-            window.alert('Prompt cadastrado!');
+            toast({
+                title: "Sucesso!",
+                description: "Prompt cadastrado!",
+                variant: "success",
+            })
             setOpen(false);
             return
         }
 
-        window.alert('Erro Inesperado!!');
+        toast({
+            title: "Atenção!",
+            description: "Erro Inesperado!",
+            variant: "destructive"
+        })
     }
 
     return (
